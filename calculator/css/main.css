@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+*:focus {
+    outline: none;
+}
+
+body {
+    background: gray;
+}
+
+ul {
+    list-style: none;
+    text-align: center;
+}
+
+#calculator {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 375px;
+    height: 650px;
+    background: #000;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+}
+
+.top {
+    background: #121212;
+    position: relative;
+}
+
+.bottom {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 3fr 1fr;
+    background: linear-gradient(180deg, rgba(37,22,22,1) 0%, rgba(0,0,0,1) 100%);
+}
+
+.left {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.right {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 1fr);
+}
+
+button {
+    border: none;
+    background: none;
+    color: rgb(202, 202, 202);
+    border-radius: 50%;
+    font-size: 24px;
+    border-top: 50px;
+    animation-direction: normal;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.inside-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    line-height: 50px;
+    transition: .5s;
+    height: 50px;
+    width: 50px;
+}
+
+#del-div {
+    height: 70px !important;
+    width: 70px !important;
+    line-height: 70px;
+}
+
+button:hover .inside-button {
+    background: rgba(38, 73, 73, 0.9);
+}
+
+.operators:hover {
+
+}
+
+.operators {
+    color: #3FD7D5;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#input {
+    position: absolute;
+    left: 5%;
+    bottom: 15%;
+    width: 90%;
+    height: 100px;
+    font-size: 50px;
+    text-align: right;
+    color: #DDDDDD;
+    background: none;
+    border: none;
+}
