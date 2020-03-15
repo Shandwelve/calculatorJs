@@ -43,7 +43,7 @@ class Calculator {
         value = '';
       }
 
-      if (digits.indexOf(this.expression[i]) !== -1) {
+      if (digits.indexOf(this.expression[i]) !== -1  || this.expression[i] === '.') {
         value += this.expression[i];
       }
     }
@@ -91,9 +91,8 @@ class Calculator {
 
 document.addEventListener("DOMContentLoaded", function () {
   const calculator = new Calculator();
-  let operands = ['+', '-', '*', '/'];
+  let operands = ['-', '+', '*', '/'];
   let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
   for (let digit of digits) {
     digit.onclick = function () {
       display.value += digit.textContent;
@@ -117,7 +116,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (operands.indexOf(display.value[display.value.length - 1]) === -1 &&
-      numbers.indexOf(display.value[display.value.length - 1]) === -1) {
+      numbers.indexOf(display.value[display.value.length - 1]) === -1 &&
+      display.value[display.value.length - 1] !== '.') {
       display.value = display.value.slice(0, display.value.length - 1);
     } else if (operands.indexOf(display.value[display.value.length - 2]) !== -1 &&
       operands.indexOf(display.value[display.value.length - 1]) !== -1) {
@@ -135,4 +135,3 @@ document.addEventListener("DOMContentLoaded", function () {
     calculator.setExpression(display.value);
   }
 });
-
