@@ -1,137 +1,159 @@
-let display = document.querySelector('#input');
-let digits = document.querySelectorAll('.digit');
-let operators = document.querySelectorAll('.operators');
-let del = document.querySelector('.buttDEL');
-let equal = document.querySelector('.equal');
-
 class Calculator {
-  constructor() {
-    this.expression;
-    this.operations = [];
+  constructor(option) {
+    this.option; //Todo rename option to expression
     this.numbers = [];
+    this.operation = [];
   }
 
-  setExpression(expression) {
-    this.expression = expression;
-    this.calculate();
+  getOption(option) {
+    this.option = option; // Todo setExpression
   }
 
   calculate() {
-    this.clearData();
-    this.parseExpression();
-    this.showResult(this.getResult());
+    this.clearCache();
+    this.getNumbers();
+    this.getOperation();
+    this.showResult(this.getResults());
   }
 
-  clearData() {
-    this.operations = [];
-    this.numbers = [];
+  clearCache() { //Todo rename in clear
+    this.numbers.splice(0, this.numbers.length);
+    this.operation.splice(0, this.operation.length);
   }
 
-  parseExpression() {
-    let operands = ['+', '-', '*', '/'];
-    let digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    let value = '';
-
-    if (operands.indexOf(this.expression[this.expression.length - 1]) !== -1) {
-      this.expression = this.expression.slice(0, this.expression.length - 1);
-    }
-
-    for (let i = 0; i < this.expression.length; i++) {
-      if (operands.indexOf(this.expression[i]) !== -1) {
-        this.operations.push(this.expression[i]);
-        this.numbers.push(Number(value));
-        value = '';
-      }
-
-      if (digits.indexOf(this.expression[i]) !== -1  || this.expression[i] === '.') {
-        value += this.expression[i];
+  getNumbers() {
+    let val = '';
+    const operstors = ['+', '-', '*', '/'];
+    for (let i = 0; i < this.option.length; i++) {
+      if (operstors.indexOf(this.option[i])!==-1) {
+        this.numbers.push(Number(val));
+        val = '';
+      } else {
+        if (Number.isFinite(Number(this.option[i]))) {
+          val += this.option[i];
+        }
       }
     }
-
-    if (value !== '') {
-      this.numbers.push(Number(value));
-    }
+    this.numbers.push(Number(val));
   }
 
-  getResult() {
-    let firstNumber = this.numbers[0];
-    let secondNumber = this.numbers[1];
-
-    for (let i = 0; i < this.numbers.length; i++) {
-
-      switch (this.operations[i]) {
-        case '+' :
-          firstNumber += secondNumber;
-          break;
-
-        case '-' :
-          firstNumber -= secondNumber;
-          break;
-
-        case '*' :
-          firstNumber *= secondNumber;
-          break;
-
-        case '/' :
-          if (secondNumber !== 0) {
-            firstNumber /= secondNumber;
-          } else
-            return 'error';
-          break;
+  getOperation() {
+    for (let i = 0; i < this.option.length; i++) {
+      if (this.option[i] === '-' || this.option[i] === '+' ||
+        this.option[i] === '*' || this.option[i] === '/') {
+        this.operation.push(this.option[i]);
       }
-      secondNumber = this.numbers[i + 2];
     }
-    return firstNumber;
   }
 
-  showResult (result) {
-    display.value = result;
+  getResults() {
+    let result;
+    switch (this.operation[0]) {
+      case '+' :
+        result = this.numbers[0] + this.numbers[1];
+        break;
+
+      case '-' :
+        result = this.numbers[0] - this.numbers[1];
+        break;
+
+      case '*' :
+        result = this.numbers[0] * this.numbers[1];
+        break;
+
+      case '/' :
+        if (this.numbers[1] !== 0) {
+          result = this.numbers[0] / this.numbers[1];
+        } else result = 'error';
+        break;
+    }
+    return result;
+  }
+
+  showResult(result) {
+    document.querySelector('#screen').value = result;
+  }
+
+  showOperation(button) {
+    document.querySelector('#screen').value += button;
+  }
+
+  clearScreen() {
+    document.querySelector('#screen').value = '';
   }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   const calculator = new Calculator();
-  let operands = ['-', '+', '*', '/'];
-  let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  for (let digit of digits) {
-    digit.onclick = function () {
-      display.value += digit.textContent;
-    }
-  }
 
-  for (let operator of operators) {
-    operator.onclick = function () {
-      if (display.value.length !== 0) {
-        display.value += operator.textContent;
-      }
-      if (operands.indexOf(display.value[display.value.length - 2]) !== -1) {
-        display.value = display.value.slice(0, display.value.length - 2) + display.value[display.value.length - 1];
-      }
-    };
-  }
+  document.querySelector('#btnEqual').addEventListener('click', function () {
+    const screen = document.querySelector('#screen').value;
+    calculator.getOption(screen);
+    calculator.calculate();
+  })
 
-  display.oninput = function () {
-    if (display.value[display.value.length - 1] === '=') {
-      calculator.setExpression(display.value);
-    }
+  document.querySelector('#btn1').addEventListener('click', function () {
+    calculator.showOperation('1');
+  })
 
-    if (operands.indexOf(display.value[display.value.length - 1]) === -1 &&
-      numbers.indexOf(display.value[display.value.length - 1]) === -1 &&
-      display.value[display.value.length - 1] !== '.') {
-      display.value = display.value.slice(0, display.value.length - 1);
-    } else if (operands.indexOf(display.value[display.value.length - 2]) !== -1 &&
-      operands.indexOf(display.value[display.value.length - 1]) !== -1) {
-      display.value = display.value.slice(0, display.value.length - 2) + display.value[display.value.length - 1];
-    } else if (operands.indexOf(display.value[0]) !== -1) {
-      display.value = display.value.slice(1, display.value.length);
-    }
-  };
+  document.querySelector('#btn2').addEventListener('click', function () {
+    calculator.showOperation('2');
+  })
 
-  del.onclick = function () {
-    display.value = '';
-  };
+  document.querySelector('#btn3').addEventListener('click', function () {
+    calculator.showOperation('3');
+  })
 
-  equal.onclick = function () {
-    calculator.setExpression(display.value);
-  }
-});
+  document.querySelector('#btn4').addEventListener('click', function () {
+    calculator.showOperation('4');
+  })
+
+  document.querySelector('#btn5').addEventListener('click', function () {
+    calculator.showOperation('5');
+  })
+
+  document.querySelector('#btn6').addEventListener('click', function () {
+    calculator.showOperation('6');
+  })
+
+  document.querySelector('#btn7').addEventListener('click', function () {
+    calculator.showOperation('7');
+  })
+
+  document.querySelector('#btn8').addEventListener('click', function () {
+    calculator.showOperation('8');
+  })
+
+  document.querySelector('#btn9').addEventListener('click', function () {
+    calculator.showOperation('9');
+  })
+
+  document.querySelector('#btn0').addEventListener('click', function () {
+    calculator.showOperation('0');
+  })
+
+  document.querySelector('#btnSlash').addEventListener('click', function () {
+    calculator.showOperation('/');
+  })
+
+  document.querySelector('#btnPlus').addEventListener('click', function () {
+    calculator.showOperation('+');
+  })
+
+  document.querySelector('#btnMinus').addEventListener('click', function () {
+    calculator.showOperation('-');
+  })
+
+  document.querySelector('#btnStar').addEventListener('click', function () {
+    calculator.showOperation('*');
+  })
+
+  document.querySelector('#btnC').addEventListener('click', function () {
+    calculator.clearScreen();
+  })
+})
+
+document.getElementById('container').addEventListener('click', (e)=> {
+  console.log(e.target.value)
+})
+
