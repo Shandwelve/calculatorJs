@@ -1,40 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator.exe</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <section id="calculator">
-        <div class="top">
-            <input type="text" id="input">
-        </div>
-        <div class="bottom">
-            <div class="left">
-                <button class="digit"><div class="inside-button">7</div></button>
-                <button class="digit"><div class="inside-button">8</div></button>
-                <button class="digit"><div class="inside-button">9</div></button>
-                <button class="digit"><div class="inside-button">4</div></button>
-                <button class="digit"><div class="inside-button">5</div></button>
-                <button class="digit"><div class="inside-button">6</div></button>
-                <button class="digit"><div class="inside-button">1</div></button>
-                <button class="digit"><div class="inside-button">2</div></button>
-                <button class="digit"><div class="inside-button">3</div></button>
-                <button class="digit"><div class="inside-button">.</div></button>
-                <button class="digit"><div class="inside-button">0</div></button>
-                <button class="digit buttDEL"><div class="inside-button" id="del-div">DEL</div></button>
-            </div>
-            <div class="right">
-                <button class="operators"><div class="inside-button">/</div></button>
-                <button class="operators"><div class="inside-button">*</div></button>
-                <button class="operators"><div class="inside-button">-</div></button>
-                <button class="operators"><div class="inside-button">+</div></button>
-                <button class="operators equal"><div class="inside-button">=</div></button>
-            </div>
-        </div>
-    </section>
-    <script src="js/main.js"></script>
+<input type="text" placeholder="Operation" id="screen">
+<br>
+<div id="container">
+    <input type="button" value="1" id="btn1">
+    <input type="button" value="2" id="btn2">
+    <input type="button" value="3" id="btn3">
+    <input type="button" value="+" id="btnPlus">
+    <br>
+    <input type="button" value="4" id="btn4">
+    <input type="button" value="5" id="btn5">
+    <input type="button" value="6" id="btn6">
+    <input type="button" value="-" id="btnMinus">
+    <br>
+    <input type="button" value="7" id="btn7">
+    <input type="button" value="8" id="btn8">
+    <input type="button" value="9" id="btn9">
+    <input type="button" value="*" id="btnStar">
+    <br>
+    <input type="button" value="C" id="btnC">
+    <input type="button" value="0" id="btn0">
+    <input type="button" value="=" id="btnEqual">
+    <input type="button" value="/" id="btnSlash">
+    <br>
+</div>
+<script src="js/main.js"></script>
 </body>
 </html>
